@@ -4,7 +4,7 @@
 
 # open file
 
-# total_cost = 0
+total_cost = 0
 
 # f = open('Data/portfolio.csv', 'rt')
 # # read all lines
@@ -25,7 +25,21 @@
 # Exercise 1.28
 
 import gzip
-with gzip.open('Data/portfolio.csv.gz', 'rt') as f:
-    
-    for line in f:
-        print(line, end='')
+
+# Exercise 1.30
+
+def profolio_cost(filename):
+    tcost = 0
+    try:
+        with gzip.open(filename, 'rt') as f:
+            header = next(f)
+            for line in f:
+                row = line.split(',')
+                cost = float(row[1]) * float(row[2])
+                tcost += cost
+                print(line, end='')
+        return tcost
+    except FileNotFoundError:
+        print('File not found')
+total_cost = profolio_cost('Data/portfolio.csv`.gz')
+print('Total cost:', total_cost)
